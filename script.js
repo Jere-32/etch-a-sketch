@@ -5,7 +5,7 @@ function randColor () {
     let red = Math.floor(Math.random() * 256);
     let blue = Math.floor(Math.random() * 256);
     let green = Math.floor(Math.random() * 256);
-    let rand = "(rgb(" + red + "," + green + "," + blue +"))";
+    let rand = "rgb(" + red + "," + green + "," + blue +")";
     return rand
   }
  
@@ -42,15 +42,25 @@ for (let i = 0; i < allSquares.length; i++) {
   for (let i = 0; i < (numOfSquares * numOfSquares); i++) {
     const square = document.createElement('div');
     square.classList.add('square');
-    container.appendChild(square);
-    square.style.cssText = `width: ${squareSize}px; height: ${squareSize}px;`
+    square.style.cssText = `width: ${squareSize}px; height: ${squareSize}px;`;
+    let initialColor = 0;
+    let currentOpacity = 0;
     square.addEventListener("mouseover", function() {
-        let red = Math.floor(Math.random() * 256);
-        let blue = Math.floor(Math.random() * 256);
-        let green = Math.floor(Math.random() * 256);
-      square.style.background = randColor;
+        if (initialColor === 0) {
+            let red = Math.floor(Math.random() * 256);
+            let blue = Math.floor(Math.random() * 256);
+            let green = Math.floor(Math.random() * 256);
+            let initialColor = `rgb(${red}, ${green}, ${blue})`;
+            square.style.background = initialColor;
+        }
+        //opacity adder not working properly
+        else if (initialColor !== 0) {
+            currentOpacity += 0.1;
+            square.style.background = `rgba(${red}, ${green}, ${blue}, ${currentOpacity})`;
+        }
     });
-  }
+    container.appendChild(square);
+}
 });
 
 
